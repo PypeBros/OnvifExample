@@ -13,14 +13,18 @@ namespace OnvifExample
     public class DeviceViewModel
     {
         public DeviceClient Client { get; set; }
-        public string IpAddress = "172.20.200.203";
+        public string IpAddress = "127.0.0.1"; // FIXME: set a real device address.
         public string Username = "root";
         public string Password = "pass";
 
         public DeviceViewModel()
         {
+            /* replace the two lines below by the following version if you want to use HTTPS
+             *   EndpointAddress DeviceServiceRemoteAddress = new EndpointAddress("http://" + IpAddress + "/onvif/device_service");
+             *   var httpBinding = new HttpTransportBindingElement
+             */
             EndpointAddress DeviceServiceRemoteAddress = new EndpointAddress("http://" + IpAddress + "/onvif/device_service");
-            HttpTransportBindingElement httpBinding = new HttpTransportBindingElement
+            var httpBinding = new HttpTransportBindingElement
             {
                 AuthenticationScheme = AuthenticationSchemes.Digest
             };
@@ -36,10 +40,7 @@ namespace OnvifExample
 
             Client.Endpoint.Behaviors.Add(passwordDigestBehavior);
 
-
-
-
-
+            Console.WriteLine("Querying " + IpAddress + " ...");
 
             Client.GetDeviceInformation(out string Model,out string FirmwareVersion, out string SerialNumber, out string HardwareId);
 
@@ -47,7 +48,6 @@ namespace OnvifExample
             Console.WriteLine("FirmwareVersion = " + FirmwareVersion);
             Console.WriteLine("SerialNumber = " + SerialNumber);
             Console.WriteLine("HardwareId = " + HardwareId);
-
         }
     }
 }
