@@ -19,6 +19,8 @@ namespace OnvifExample
 
         public DeviceViewModel()
         {
+            Console.WriteLine("Querying " + IpAddress + " ...");
+
             /* replace the two lines below by the following version if you want to use HTTPS
              *   EndpointAddress DeviceServiceRemoteAddress = new EndpointAddress("http://" + IpAddress + "/onvif/device_service");
              *   var httpBinding = new HttpTransportBindingElement
@@ -40,9 +42,8 @@ namespace OnvifExample
 
             Client.Endpoint.Behaviors.Add(passwordDigestBehavior);
 
-            Console.WriteLine("Querying " + IpAddress + " ...");
-
-            Client.GetDeviceInformation(out string Model,out string FirmwareVersion, out string SerialNumber, out string HardwareId);
+            string Model, FirmwareVersion, SerialNumber, HardwareId;
+            Client.GetDeviceInformation(out Model,out FirmwareVersion, out SerialNumber, out HardwareId);
 
             Console.WriteLine("Model = " + Model);
             Console.WriteLine("FirmwareVersion = " + FirmwareVersion);
