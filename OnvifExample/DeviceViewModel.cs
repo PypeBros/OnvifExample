@@ -19,6 +19,10 @@ namespace OnvifExample
 
         public DeviceViewModel()
         {
+            string[] arguments = Environment.GetCommandLineArgs();
+            if (arguments.Length > 1) IpAddress = arguments[1];
+            if (arguments.Length > 2) Username = arguments[2];
+            if (arguments.Length > 3) Password = arguments[3];
             Console.WriteLine("Querying " + IpAddress + " ...");
 
             /* replace the two lines below by the following version if you want to use HTTPS
